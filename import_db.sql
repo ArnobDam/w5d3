@@ -29,11 +29,11 @@ CREATE TABLE replies (
     body TEXT NOT NULL,
     user_id INTEGER NOT NULL,
     question_id INTEGER NOT NULL,
-    parent_reply_id INTEGER NOT NULL,
+    parent_reply_id INTEGER,
 
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (question_id) REFERENCES questions(id),
-    FOREIGN KEY (parent_reply_id) REFERENCES replies(id-1)
+    FOREIGN KEY (parent_reply_id) REFERENCES replies(id)
 );
 
 CREATE TABLE question_likes (
@@ -49,11 +49,30 @@ INSERT INTO
     users (fname, lname)
 VALUES
     ('Arnob', 'Dam'),
-    ('Cath', 'Anderson')
+    ('Cath', 'Anderson'),
+    ('Amin', 'Babar');
 
 INSERT INTO
     questions (title, body, author_id)
 VALUES
-    ('Basic SQL Commands', 'Which command should I use to create a table?', (SELECT id FROM users WHERE fname = 'Cath'))
-    ('Insert SQL Command', 'How do I insert something into a table?', (SELECT id FROM users WHERE fname = 'Arnob'))
+    ('Basic SQL Commands', 'Which command should I use to create a table?', (SELECT id FROM users WHERE fname = 'Cath')),
+    ('Insert SQL Command', 'How do I insert something into a table?', (SELECT id FROM users WHERE fname = 'Arnob'));
+
+INSERT INTO
+    question_follows (user_id, question_id)
+VALUES
+    ((SELECT id FROM users WHERE fname = 'Cath'), (SELECT id FROM questions WHERE title = 'Basic SQL Commands')),
+    ((SELECT id FROM users WHERE fname = 'Arnob'), (SELECT id FROM questions WHERE title = 'Insert SQL Command'));
+
+INSERT INTO
+    replies (body, user_id, question_id, parent_reply_id)
+VALUES
+    ('Hi Cath, you should use CREATE TABLE :) (insert Amin''s voice here)', (SELECT id FROM users WHERE fname = 'Amin'), (SELECT id FROM questions WHERE title = 'Basic SQL Commands')),
+    ('Hi Arnob, you should use INSERT INTO :D (insert Amin''s voice here)', (SELECT id FROM users WHERE fname = 'Amin'), (SELECT id FROM questions WHERE title = 'Insert SQL Command')),
+    ('Thank you!', (SELECT id FROM users WHERE fname = 'Cath'), (SELECT id FROM questions WHERE title = 'Basic SQL Commands'), (SELECT id FROM replies WHERE body = 'Hi Cath, you should use CREATE TABLE :) (insert Amin''s voice here)'));
+
+INSERT INTO 
+    question_likes (user_id, question_id)
+VALUES
+    ((SELECT id FROM users WHERE fname = 'Cath'), (SELECT id FROM questions WHERE title = 'Insert SQL Command'));
 
