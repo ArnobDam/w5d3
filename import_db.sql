@@ -75,8 +75,8 @@ VALUES
 INSERT INTO
     replies (body, user_id, question_id, parent_reply_id)
 VALUES
-    ('Hi Cath, you should use CREATE TABLE :) (insert Amin''s voice here)', (SELECT id FROM users WHERE fname = 'Amin'), (SELECT id FROM questions WHERE title = 'Basic SQL Commands'), NULL),
-    ('Hi Arnob, you should use INSERT INTO :D (insert Amin''s voice here)', (SELECT id FROM users WHERE fname = 'Amin'), (SELECT id FROM questions WHERE title = 'Insert SQL Command'), NULL),
+    ('Hi Cath, you should use CREATE TABLE :)', (SELECT id FROM users WHERE fname = 'Amin'), (SELECT id FROM questions WHERE title = 'Basic SQL Commands'), null),
+    ('Hi Arnob, you should use INSERT INTO :D', (SELECT id FROM users WHERE fname = 'Amin'), (SELECT id FROM questions WHERE title = 'Insert SQL Command'), null),
     ('Thank you!', (SELECT id FROM users WHERE fname = 'Cath'), (SELECT id FROM questions WHERE title = 'Basic SQL Commands'), (SELECT id FROM replies WHERE body = 'Hi Cath, you should use CREATE TABLE :) (insert Amin''s voice here)'));
 
 INSERT INTO 
