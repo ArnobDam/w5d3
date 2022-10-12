@@ -1,5 +1,12 @@
 PRAGMA foreign_keys = ON;
 
+DROP TABLE IF EXISTS question_likes;
+DROP TABLE IF EXISTS replies;
+DROP TABLE IF EXISTS question_follows;
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS users;
+
+
 CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     fname TEXT NOT NULL,
@@ -36,6 +43,7 @@ CREATE TABLE replies (
     FOREIGN KEY (parent_reply_id) REFERENCES replies(id)
 );
 
+
 CREATE TABLE question_likes (
     id INTEGER PRIMARY KEY,
     user_id INTEGER NOT NULL,
@@ -67,8 +75,8 @@ VALUES
 INSERT INTO
     replies (body, user_id, question_id, parent_reply_id)
 VALUES
-    ('Hi Cath, you should use CREATE TABLE :) (insert Amin''s voice here)', (SELECT id FROM users WHERE fname = 'Amin'), (SELECT id FROM questions WHERE title = 'Basic SQL Commands')),
-    ('Hi Arnob, you should use INSERT INTO :D (insert Amin''s voice here)', (SELECT id FROM users WHERE fname = 'Amin'), (SELECT id FROM questions WHERE title = 'Insert SQL Command')),
+    ('Hi Cath, you should use CREATE TABLE :) (insert Amin''s voice here)', (SELECT id FROM users WHERE fname = 'Amin'), (SELECT id FROM questions WHERE title = 'Basic SQL Commands'), NULL),
+    ('Hi Arnob, you should use INSERT INTO :D (insert Amin''s voice here)', (SELECT id FROM users WHERE fname = 'Amin'), (SELECT id FROM questions WHERE title = 'Insert SQL Command'), NULL),
     ('Thank you!', (SELECT id FROM users WHERE fname = 'Cath'), (SELECT id FROM questions WHERE title = 'Basic SQL Commands'), (SELECT id FROM replies WHERE body = 'Hi Cath, you should use CREATE TABLE :) (insert Amin''s voice here)'));
 
 INSERT INTO 
